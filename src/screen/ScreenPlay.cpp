@@ -7,8 +7,16 @@
 #include "../InputType.hpp"
 #include "../constants.hpp"
 
+#include <mgba/core/cheats.h>
+#include <mgba/core/config.h>
+#include <mgba/core/core.h>
+#include <mgba/core/log.h>
+#include <mgba/core/serialize.h>
+#include <mgba/debugger/debugger.h>
+
 ScreenPlay::ScreenPlay(std::string rom) {
-    
+    core = mCoreFind(rom.c_str());
+    core->init(core);
 }
 
 ScreenPlay::~ScreenPlay() {

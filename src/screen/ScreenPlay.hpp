@@ -2,13 +2,14 @@
 #define SCREENPLAY_HPP
 
 #include <SDL.h>
+#include <mgba/core/core.h>
 #include <string>
 
 #include "ScreenBase.hpp"
 
 class ScreenPlay : public ScreenBase {
 private:
-
+    mCore * core = nullptr;
 public:
     ScreenPlay(std::string rom);
     ~ScreenPlay();
