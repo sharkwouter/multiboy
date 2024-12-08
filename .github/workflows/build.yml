@@ -1,0 +1,101 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget cmake libsdl2-dev libsdl2-ttf-dev libfuse2
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build mgba
+        run: |
+          cd vendor/mgba
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DLIBMGBA_ONLY=ON -DBUILD_SHARED_LIBS=ON
+          cd build
+          make
+          sudo make install
+      - name: Build
+        run: |
+          mkdir multiboy && cd multiboy
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+          cmake --build .
+          strip --strip-unneeded multiboy
+          make install DESTDIR=AppDir
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy*.AppImage
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage
+          cp ../LICENSE ../README.md ./
+      - name: Publish artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiboy-linux
+          path: |
+            multiboy/multiboy*.AppImage
+
+  Windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Install dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-binutils
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-SDL2
+            mingw-w64-x86_64-SDL2_ttf
+          update: true
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          mkdir multiboy && cd multiboy
+          cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ..
+          cmake --build .
+          strip --strip-unneeded multiboy.exe
+          cp ../LICENSE ../README.md ./
+      - name: Publish artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: oceanpop-windows
+          path: |
+            multiboy/multiboy.exe
+            multiboy/assets
+
+  Release:
+    needs: [Linux, Windows]
+    if: ${{ github.ref_type == 'tag' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build: [linux, windows]
+    steps:
+    - uses: actions/download-artifact@v3
+    - name: Zip artifacts
+      run: |
+        zip -r multiboy-${{matrix.build}}.zip multiboy-${{matrix.build}}
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: multiboy-${{matrix.build}}.zip
+        prerelease: true
+        name: Multiboy ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
