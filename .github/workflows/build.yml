@@ -29,6 +29,7 @@ jobs:
           cmake --build .
           strip --strip-unneeded multiboy
           cp ../LICENSE ../README.md ./
+          cp /usr/local/lib/libmgba.a ./
       - name: Publish artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -70,7 +71,7 @@ jobs:
       - name: Publish artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: oceanpop-windows
+          name: multiboy-windows
           path: |
             multiboy/multiboy.exe
             multiboy/assets
