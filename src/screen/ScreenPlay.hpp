@@ -2,6 +2,10 @@
 #define SCREENPLAY_HPP
 
 #include <SDL.h>
+
+#define ENABLE_VFS
+#define ENABLE_DIRECTORIES
+
 #include <mgba/core/core.h>
 #include <string>
 
@@ -9,7 +13,11 @@
 
 class ScreenPlay : public ScreenBase {
 private:
-    mCore * core = nullptr;
+    struct mCore * core = nullptr;
+    SDL_Texture * screen = nullptr;
+    mColor * screen_buffer = nullptr;
+    unsigned int render_width, render_height;
+    int render_pitch;
 public:
     ScreenPlay(std::string rom);
     ~ScreenPlay();

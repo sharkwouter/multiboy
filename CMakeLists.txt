@@ -41,16 +41,16 @@ if(WIN32)
 endif()
 option(BUILD_STATIC "Build a static binary" ${BUILD_STATIC_DEFAULT})
 
+# Build libmgba from source
+set(BUILD_STATIC_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
+set(BUILD_OBJECT_LIBS OFF)
+set(LIBMGBA_ONLY ON)
+set(ENABLE_VFS ON)
+
+add_subdirectory(vendor/mgba)
+
 if(BUILD_STATIC)
-    # Build libraries
-    set(BUILD_STATIC_LIBS ON)
-    set(BUILD_SHARED_LIBS OFF)
-    set(BUILD_OBJECT_LIBS OFF)
-
-    set(LIBMGBA_ONLY ON)
-
-    add_subdirectory(vendor/mgba)
-
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${SDL2_STATIC_LIBRARIES}
         ${SDL2_TTF_STATIC_LIBRARIES}
