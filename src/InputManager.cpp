@@ -91,6 +91,12 @@ Input InputManager::getGamepadInput(SDL_ControllerButtonEvent event, bool releas
         case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
             input.type = InputType::RIGHT;
             break;
+        case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+            input.type = InputType::L;
+            break;
+        case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+            input.type = InputType::R;
+            break;
         default:
             input.type = InputType::NONE;
     }
@@ -134,6 +140,12 @@ Input InputManager::getKeyboardInput(SDL_Keycode button, bool released) {
             break;
         case SDLK_RIGHT:
             input.type = InputType::RIGHT;
+            break;
+        case SDLK_a:
+            input.type = InputType::L;
+            break;
+        case SDLK_s:
+            input.type = InputType::R;
             break;
         default:
             input.type = InputType::NONE;
