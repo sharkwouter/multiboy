@@ -20,7 +20,11 @@ enum class InputType {
     RIGHT,
     RIGHT_RELEASED,
     PAUSE,
-    PAUSE_RELEASED
+    PAUSE_RELEASED,
+    L,
+    L_RELEASED,
+    R,
+    R_RELEASED
 };
 
 #endif // INPUTTYPE_HPP

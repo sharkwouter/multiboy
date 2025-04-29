@@ -45,18 +45,72 @@ void ScreenPlay::handleInput(Input input) {
     switch (input.type)
     {
         case InputType::A:
-        case InputType::B:
-        case InputType::LEFT:
-        case InputType::RIGHT:
-        case InputType::UP:
-        case InputType::DOWN:
-        default:
+            keys_pressed |= 1;
             break;
+        case InputType::A_RELEASED:
+            keys_pressed &= ~1;
+            break;
+        case InputType::B:
+            keys_pressed |= 2;
+            break;
+        case InputType::B_RELEASED:
+            keys_pressed &= ~2;
+            break;
+        case InputType::SELECT:
+            keys_pressed |= 4;
+            break;
+        case InputType::SELECT_RELEASED:
+            keys_pressed &= ~4;
+            break;
+        case InputType::START:
+            keys_pressed |= 8;
+            break;
+        case InputType::START_RELEASED:
+            keys_pressed &= ~8;
+            break;
+        case InputType::RIGHT:
+            keys_pressed |= 16;
+            break;
+        case InputType::RIGHT_RELEASED:
+            keys_pressed &= ~16;
+            break;
+        case InputType::LEFT:
+            keys_pressed |= 32;
+            break;
+        case InputType::LEFT_RELEASED:
+            keys_pressed &= ~32;
+            break;
+        case InputType::UP:
+            keys_pressed |= 64;
+            break;
+        case InputType::UP_RELEASED:
+            keys_pressed &= ~64;
+            break;
+        case InputType::DOWN:
+            keys_pressed |= 128;
+            break;
+        case InputType::DOWN_RELEASED:
+            keys_pressed &= ~128;
+            break;
+        case InputType::R:
+            keys_pressed |= 256;
+            break;
+        case InputType::R_RELEASED:
+            keys_pressed &= ~256;
+            break;
+        case InputType::L:
+            keys_pressed |= 512;
+            break;
+        case InputType::L_RELEASED:
+            keys_pressed &= ~512;
+            break;
+        default:
+            return;
     }
 }
 
 void ScreenPlay::update() {
-
+    core->setKeys(core, keys_pressed);
 }
 
 void ScreenPlay::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
