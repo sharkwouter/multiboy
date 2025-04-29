@@ -72,3 +72,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_SOURCE_DIR}/roms ${CMAKE_CURRENT_BINARY_DIR}/roms
 )
+
+if(NOT WIN32)
+    install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/assets DESTINATION share/${PROJECT_NAME})
+endif()
