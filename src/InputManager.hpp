@@ -16,7 +16,13 @@ private:
     bool quit_triggered = false;
     bool controller_event_triggered = false;
 
+    bool joystick_left = false;
+    bool joystick_right = false;
+    bool joystick_up = false;
+    bool joystick_down = false;
+
     Input getGamepadInput(SDL_ControllerButtonEvent event, bool released);
+    Input getGamepadAxisInput(SDL_ControllerAxisEvent event);
     Input getKeyboardInput(SDL_Keycode event, bool released);
 
     void connectGamepad(SDL_JoystickID id);

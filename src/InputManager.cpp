@@ -1,5 +1,10 @@
 #include "InputManager.hpp"
 
+#include "constants.hpp"
+
+#define AXIS_MAX 32767
+#define AXIS_MIN -32767
+
 InputManager::InputManager(std::vector<PlayerManager *> * player_managers) {
     this->player_managers = player_managers;
 }
@@ -33,6 +38,14 @@ void InputManager::getInputs(std::vector<Input> * inputs) {
             case SDL_CONTROLLERBUTTONUP:
                 {
                     Input input = this->getGamepadInput(event.cbutton, true);
+                    if (input.type != InputType::NONE) {
+                        inputs->push_back(input);
+                    }
+                }
+                break;
+            case SDL_CONTROLLERAXISMOTION:
+                {
+                    Input input = this->getGamepadAxisInput(event.caxis);
                     if (input.type != InputType::NONE) {
                         inputs->push_back(input);
                     }
@@ -103,6 +116,62 @@ Input InputManager::getGamepadInput(SDL_ControllerButtonEvent event, bool releas
 
     if (released && input.type != InputType::NONE) {
         input.type = (InputType) ((int) input.type + 1);
+    }
+
+    return input;
+}
+
+Input InputManager::getGamepadAxisInput(SDL_ControllerAxisEvent event)
+{
+    Input input;
+    input.gamepad_id = event.which;
+    input.type = InputType::NONE;
+
+    switch (event.axis) {
+        case SDL_CONTROLLER_AXIS_LEFTX:
+            if (event.value > (AXIS_MAX*ANALOG_DEADZONE_MULTIPLIER)) {
+                if (!this->joystick_right) {
+                    input.type = InputType::RIGHT;
+                    this->joystick_right = true;
+                }
+            } else if (event.value < (AXIS_MIN*ANALOG_DEADZONE_MULTIPLIER)) {
+                if(!this->joystick_left) {
+                    input.type = InputType::LEFT;
+                    this->joystick_left = true;
+                }
+            } else {
+                if (this->joystick_right) {
+                    input.type = InputType::RIGHT_RELEASED;
+                    this->joystick_right = false;
+                } else if (this->joystick_left) {
+                    input.type = InputType::LEFT_RELEASED;
+                    this->joystick_left = false;
+                }
+            }
+            break;
+        case SDL_CONTROLLER_AXIS_LEFTY:
+            if (event.value > (AXIS_MAX*ANALOG_DEADZONE_MULTIPLIER)) {
+                if(!this->joystick_down) {
+                    input.type = InputType::DOWN;
+                    this->joystick_down = true;
+                }
+            } else if (event.value < (AXIS_MIN*ANALOG_DEADZONE_MULTIPLIER)) {
+                if(!this->joystick_up) {
+                    input.type = InputType::UP;
+                    this->joystick_up = true;
+                }
+            } else {
+                if (this->joystick_down) {
+                    input.type = InputType::DOWN_RELEASED;
+                    this->joystick_down = false;
+                } else if (this->joystick_up) {
+                    input.type = InputType::UP_RELEASED;
+                    this->joystick_up = false;
+                }
+            }
+            break;
+        default:
+            break;
     }
 
     return input;

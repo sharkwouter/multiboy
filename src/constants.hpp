@@ -15,4 +15,6 @@ inline constexpr int NO_INPUT = -2;
 
 inline constexpr int MAX_NAME_LENGTH = 10;
 
+inline constexpr float ANALOG_DEADZONE_MULTIPLIER = 0.5;
+
 #endif // CONSTANTS_HPP
