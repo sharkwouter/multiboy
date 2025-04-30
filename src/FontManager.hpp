@@ -12,8 +12,6 @@ private:
     TTF_Font * font_title = nullptr;
     TTF_Font * font = nullptr;
     TTF_Font * font_small = nullptr;
-
-    bool loadFonts(std::string location);
 public:
     FontManager();
     ~FontManager();

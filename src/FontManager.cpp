@@ -3,19 +3,23 @@
 #include <stdexcept>
 
 #include "constants.hpp"
+#include "utils.hpp"
 
 FontManager::FontManager()
 {
-  if (TTF_Init() == -1)
-  {
-    throw std::runtime_error(TTF_GetError());
-  }
-
-  if (!this->loadFonts(".")) {
-    if (!this->loadFonts("../share/multiboy")) {
+    if (TTF_Init() == -1)
+    {
         throw std::runtime_error(TTF_GetError());
     }
-  }
+
+    std::string font_path = getAssetPath("PublicPixel.ttf");
+
+    this->font_small = TTF_OpenFont(font_path.c_str(), FONT_SIZE / 2);
+    this->font = TTF_OpenFont(font_path.c_str(), FONT_SIZE);
+    this->font_title = TTF_OpenFont(font_path.c_str(), FONT_SIZE * 2);
+    if (!this->font_small || !this->font || !this->font_title) {
+        throw std::runtime_error(TTF_GetError());
+    }
 }
 
 FontManager::~FontManager() {
@@ -50,18 +54,4 @@ SDL_Texture * FontManager::getTexture(SDL_Renderer *renderer, std::string text, 
     SDL_FreeSurface(surface);
 
     return texture;
-}
-
-bool FontManager::loadFonts(std::string location) {
-    std::string font_path = location + std::string("/assets/PublicPixel.ttf");
-
-    this->font_small = TTF_OpenFont(font_path.c_str(), FONT_SIZE / 2);
-    this->font = TTF_OpenFont(font_path.c_str(), FONT_SIZE);
-    this->font_title = TTF_OpenFont(font_path.c_str(), FONT_SIZE * 2);
-
-    if (!this->font_small || !this->font || !this->font_title) {
-      return false;
-    }
-
-    return true;
 }
