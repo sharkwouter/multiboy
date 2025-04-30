@@ -47,7 +47,11 @@ void PlayerManager::handleInput(Input input) {
                 this->active = false;
             } else if (input.type == InputType::A) {
                 this->rom = ((ScreenSelectRom*) this->screen)->getSelectedRom();
-                this->switchScreen(ScreenType::PLAY);
+                if (!this->rom.empty()) {
+                    this->switchScreen(ScreenType::PLAY);
+                } else {
+                    this->active = false;
+                }
             } else {
                 this->screen->handleInput(input);
             }
