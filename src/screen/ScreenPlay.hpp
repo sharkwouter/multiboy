@@ -3,9 +3,6 @@
 
 #include <SDL.h>
 
-#define ENABLE_VFS
-#define ENABLE_DIRECTORIES
-
 #include <mgba/core/core.h>
 #include <string>
 

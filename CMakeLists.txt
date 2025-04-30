@@ -19,21 +19,11 @@ include(FindPkgConfig)
 pkg_search_module(SDL2 REQUIRED sdl2)
 pkg_search_module(SDL2_TTF REQUIRED SDL2_ttf)
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
-    ${SDL2_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
-)
-
 include_directories(
     ${SDL2_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/vendor/mgba/include/
 )
-
-include_directories(
-    vendor/mgba/include/
-)
-
-add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_VFS)
 
 set(BUILD_STATIC_DEFAULT OFF)
 if(WIN32)
@@ -48,7 +38,11 @@ set(BUILD_OBJECT_LIBS OFF)
 set(LIBMGBA_ONLY ON)
 set(ENABLE_VFS ON)
 
-add_subdirectory(vendor/mgba)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/mgba)
+
+# Defines required for mgba
+add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_VFS)
+add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_DIRECTORIES)
 
 if(BUILD_STATIC)
     target_link_libraries(${PROJECT_NAME} PRIVATE

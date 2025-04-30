@@ -159,7 +159,7 @@ Input InputManager::getKeyboardInput(SDL_Keycode button, bool released) {
 }
 
 void InputManager::connectGamepad(SDL_JoystickID id) {
-    SDL_Log("Players possible: %i", this->player_managers->size());
+    SDL_Log("Players possible: %li", this->player_managers->size());
     for(PlayerManager* player : *this->player_managers) {
         SDL_Log("connected: %i", player->isConnected());
         if (!player->isConnected()) {
