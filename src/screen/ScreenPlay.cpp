@@ -114,6 +114,7 @@ void ScreenPlay::update() {
 }
 
 void ScreenPlay::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
+    int size_multiplier = std::min(dst_rect->w / (int) render_width, dst_rect->h / (int) render_height);
     if (!screen) {
         screen = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, render_width, render_height);
         SDL_LockTexture(screen, NULL, (void**) &screen_buffer, &render_pitch);
@@ -125,5 +126,9 @@ void ScreenPlay::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
     SDL_LockTexture(screen, NULL, (void**) &screen_buffer, &render_pitch);
     core->runFrame(core);
     SDL_UnlockTexture(screen);
+    dst_rect->x += dst_rect->w / 2 - (int) render_width * size_multiplier / 2;
+    dst_rect->y += dst_rect->h / 2 - (int) render_height * size_multiplier / 2;
+    dst_rect->w = (int) render_width * size_multiplier;
+    dst_rect->h = (int) render_height * size_multiplier;
     SDL_RenderCopy(renderer, screen, NULL, dst_rect);
 }
