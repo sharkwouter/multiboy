@@ -121,8 +121,7 @@ Input InputManager::getGamepadInput(SDL_ControllerButtonEvent event, bool releas
     return input;
 }
 
-Input InputManager::getGamepadAxisInput(SDL_ControllerAxisEvent event)
-{
+Input InputManager::getGamepadAxisInput(SDL_ControllerAxisEvent event) {
     Input input;
     input.gamepad_id = event.which;
     input.type = InputType::NONE;

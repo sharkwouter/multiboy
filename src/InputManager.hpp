@@ -16,10 +16,10 @@ private:
     bool quit_triggered = false;
     bool controller_event_triggered = false;
 
-    bool joystick_left = false;
-    bool joystick_right = false;
-    bool joystick_up = false;
-    bool joystick_down = false;
+    bool joystick_left = true;
+    bool joystick_right = true;
+    bool joystick_up = true;
+    bool joystick_down = true;
 
     Input getGamepadInput(SDL_ControllerButtonEvent event, bool released);
     Input getGamepadAxisInput(SDL_ControllerAxisEvent event);
