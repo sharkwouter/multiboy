@@ -116,6 +116,7 @@ void ScreenPlay::update() {
 void ScreenPlay::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
     if (!screen) {
         screen = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, render_width, render_height);
+        SDL_SetTextureScaleMode(screen, SDL_ScaleModeNearest);
         SDL_LockTexture(screen, NULL, (void**) &screen_buffer, &render_pitch);
     
         core->setVideoBuffer(core, screen_buffer, render_pitch / BYTES_PER_PIXEL);

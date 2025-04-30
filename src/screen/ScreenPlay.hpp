@@ -14,7 +14,8 @@ private:
     SDL_Texture * screen = nullptr;
     mColor * screen_buffer = nullptr;
     unsigned int render_width, render_height;
-    int render_pitch, keys_pressed;
+    int render_pitch;
+    uint32_t keys_pressed = 0;
 public:
     ScreenPlay(std::string rom);
     ~ScreenPlay();
