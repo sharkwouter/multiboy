@@ -93,6 +93,7 @@ void GameManager::createWindowAndRenderer() {
     if (this->renderer == nullptr) {
         throw std::runtime_error(SDL_GetError());
     }
+    SDL_ShowCursor(0);
 }
 
 void GameManager::updatePlayerManagers() {
