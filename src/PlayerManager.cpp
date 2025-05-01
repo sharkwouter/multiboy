@@ -148,25 +148,26 @@ void PlayerManager::switchScreen(ScreenType next_screen_type) {
     switch (next_screen_type) {
         case ScreenType::SELECT_ROM:
             this->clearScreen();
-            screen = new ScreenSelectRom(font_manager);
+            this->screen = new ScreenSelectRom(font_manager);
             this->current_screen_type = next_screen_type;
             break;
         case ScreenType::SELECT_PROFILE:
             this->clearScreen();
-            screen = new ScreenSelectProfile(font_manager);
+            this->screen = new ScreenSelectProfile(font_manager);
             this->current_screen_type = next_screen_type;
             break;
         case ScreenType::SELECT_NAME:
             this->clearScreen();
-            screen = new ScreenSelectName(font_manager);
+            this->screen = new ScreenSelectName(font_manager);
             this->current_screen_type = next_screen_type;
             break;
         case ScreenType::PLAY:
             this->clearScreen();
             SDL_Log("Rom %s", this->rom.c_str());
-            screen = new ScreenPlay(this->rom, this->name);
+            this->screen = new ScreenPlay(this->rom, this->name);
             this->current_screen_type = next_screen_type;
             break;
+        case ScreenType::PAUSE:
         default:
             break;
     }
