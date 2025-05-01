@@ -37,6 +37,7 @@ jobs:
           path: |
             multiboy/multiboy
             multiboy/assets
+            multiboy/roms
 
   Windows:
     runs-on: windows-latest
@@ -76,6 +77,7 @@ jobs:
           path: |
             multiboy/multiboy.exe
             multiboy/assets
+            multiboy/roms
             multiboy/*.dll
 
   Release:
