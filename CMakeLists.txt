@@ -26,9 +26,6 @@ include_directories(
 )
 
 set(BUILD_STATIC_DEFAULT OFF)
-if(WIN32)
-    set(BUILD_STATIC_DEFAULT ON)
-endif()
 option(BUILD_STATIC "Build a static binary" ${BUILD_STATIC_DEFAULT})
 
 # Build libmgba from source
@@ -45,7 +42,7 @@ add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_VFS)
 add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_DIRECTORIES)
 
 if(BUILD_STATIC)
-    set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${SDL2_STATIC_LIBRARIES}
         ${SDL2_TTF_STATIC_LIBRARIES}
