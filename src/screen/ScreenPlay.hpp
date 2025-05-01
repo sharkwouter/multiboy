@@ -17,7 +17,7 @@ private:
     int render_pitch;
     uint32_t keys_pressed = 0;
 public:
-    ScreenPlay(std::string rom);
+    ScreenPlay(std::string rom, std::string player_name);
     ~ScreenPlay();
 
     void handleInput(Input input);

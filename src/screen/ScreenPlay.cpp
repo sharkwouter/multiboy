@@ -7,7 +7,7 @@
 #include <mgba/core/core.h>
 #include <mgba/core/config.h>
 
-ScreenPlay::ScreenPlay(std::string rom) {
+ScreenPlay::ScreenPlay(std::string rom, std::string player_name) {
     core = mCoreFind(rom.c_str());
     if (!core) {
         SDL_Log("Could not load game");
@@ -25,8 +25,10 @@ ScreenPlay::ScreenPlay(std::string rom) {
         return;
     }
 
-    mCoreConfigInit(&core->config, NULL);
+    mCoreConfigInit(&core->config, player_name.c_str());
     mCoreConfigLoad(&core->config);
+
+    mCoreLoadSaveFile(core, std::string(rom + "." + player_name + ".sav").c_str(), false);
 
     mCoreLoadConfig(core);
 

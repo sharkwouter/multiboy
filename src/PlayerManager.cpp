@@ -143,7 +143,7 @@ void PlayerManager::switchScreen(ScreenType next_screen_type) {
         case ScreenType::PLAY:
             this->clearScreen();
             SDL_Log("Rom %s", this->rom.c_str());
-            screen = new ScreenPlay(this->rom);
+            screen = new ScreenPlay(this->rom, this->name);
             this->current_screen_type = next_screen_type;
             break;
         default:
