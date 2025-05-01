@@ -13,7 +13,6 @@ Features that still need to be implemented:
 - Link cable support.
 - Multi-threading. Right now all players run their emulators on the same thread, causing slowdowns.
 - Pause menu.
-- Windows builds.
 
 Special thanks to the mgba community for the libmgba library.
 
