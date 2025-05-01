@@ -45,7 +45,7 @@ add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_VFS)
 add_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ENABLE_DIRECTORIES)
 
 if(BUILD_STATIC)
-    set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++ ${CMAKE_CXX_FLAGS}")
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${SDL2_STATIC_LIBRARIES}
         ${SDL2_TTF_STATIC_LIBRARIES}
