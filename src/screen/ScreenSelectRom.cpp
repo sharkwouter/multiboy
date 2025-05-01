@@ -11,7 +11,7 @@ ScreenSelectRom::ScreenSelectRom(FontManager * font_manager) {
 }
 
 ScreenSelectRom::~ScreenSelectRom() {
-
+    // TODO: Clean up arrays here
 }
 
 void ScreenSelectRom::handleInput(Input input) {

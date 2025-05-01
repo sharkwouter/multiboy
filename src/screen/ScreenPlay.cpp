@@ -1,8 +1,10 @@
 #include "ScreenPlay.hpp"
 
 #include <memory.h>
+#include <filesystem>
 
 #include "../InputType.hpp"
+#include "../utils.hpp"
 
 #include <mgba/core/core.h>
 #include <mgba/core/config.h>
@@ -28,7 +30,8 @@ ScreenPlay::ScreenPlay(std::string rom, std::string player_name) {
     mCoreConfigInit(&core->config, player_name.c_str());
     mCoreConfigLoad(&core->config);
 
-    mCoreLoadSaveFile(core, std::string(rom + "." + player_name + ".sav").c_str(), false);
+    std::string save_path = getProfilePath(player_name) + std::filesystem::path(rom).filename().string() + ".sav";
+    mCoreLoadSaveFile(core, save_path.c_str(), false);
 
     mCoreLoadConfig(core);
 

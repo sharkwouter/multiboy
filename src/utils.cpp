@@ -44,3 +44,27 @@ std::string getAssetPath(std::string file) {
     }
     return asset_path;
 }
+
+std::string getProfilePath() {
+    std::string path = "";
+
+    char * base_path = SDL_GetPrefPath(NULL, "multiboy");
+    if (base_path) {
+        path += base_path;
+        SDL_free(base_path);
+    }
+
+    return path;
+}
+
+std::string getProfilePath(std::string profile_name) {
+    std::string path = "";
+
+    char * base_path = SDL_GetPrefPath("multiboy", profile_name.c_str());
+    if (base_path) {
+        path += base_path;
+        SDL_free(base_path);
+    }
+
+    return path;
+}

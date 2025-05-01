@@ -3,6 +3,7 @@
 #include <memory.h>
 
 #include "screen/ScreenSelectRom.hpp"
+#include "screen/ScreenSelectProfile.hpp"
 #include "screen/ScreenSelectName.hpp"
 #include "screen/ScreenPlay.hpp"
 
@@ -21,13 +22,29 @@ void PlayerManager::handleInput(Input input) {
             SDL_Log("Activating player with controller id %i", this->getGamepadId());
             this->active = true;
             if(this->screen == nullptr){
-                this->switchScreen(ScreenType::SELECT_NAME);
+                this->switchScreen(ScreenType::SELECT_PROFILE);
             }
         }
         return;
     }
 
     switch(this->current_screen_type) {
+        case ScreenType::SELECT_PROFILE:
+            if(input.type == InputType::A) {
+                this->name = ((ScreenSelectProfile*) this->screen)->getSelectedProfile();
+                if (!this->name.empty()) {
+                    SDL_Log("Name is %s!", this->name.c_str());
+                    this->switchScreen(ScreenType::SELECT_ROM);
+                } else {
+                    this->switchScreen(ScreenType::SELECT_NAME);
+                }
+            } else if(input.type == InputType::B) {
+                    this->clearScreen();
+                    this->active = false;
+            } else {
+                this->screen->handleInput(input);
+            }
+            break;
         case ScreenType::SELECT_NAME:
             if(input.type == InputType::START) {
                 this->name = ((ScreenSelectName*) this->screen)->getSelectedName();
@@ -36,15 +53,14 @@ void PlayerManager::handleInput(Input input) {
                     this->switchScreen(ScreenType::SELECT_ROM);
                 }
             } else if(input.type == InputType::SELECT) {
-                    this->clearScreen();
-                    this->active = false;
+                this->switchScreen(ScreenType::SELECT_PROFILE);
             } else {
                 this->screen->handleInput(input);
             }
             break;
         case ScreenType::SELECT_ROM:
             if(input.type == InputType::B) {
-                this->active = false;
+                this->switchScreen(ScreenType::SELECT_PROFILE);
             } else if (input.type == InputType::A) {
                 this->rom = ((ScreenSelectRom*) this->screen)->getSelectedRom();
                 if (!this->rom.empty()) {
@@ -133,6 +149,11 @@ void PlayerManager::switchScreen(ScreenType next_screen_type) {
         case ScreenType::SELECT_ROM:
             this->clearScreen();
             screen = new ScreenSelectRom(font_manager);
+            this->current_screen_type = next_screen_type;
+            break;
+        case ScreenType::SELECT_PROFILE:
+            this->clearScreen();
+            screen = new ScreenSelectProfile(font_manager);
             this->current_screen_type = next_screen_type;
             break;
         case ScreenType::SELECT_NAME:
