@@ -76,6 +76,7 @@ jobs:
           path: |
             multiboy/multiboy.exe
             multiboy/assets
+            multiboy/*.dll
 
   Release:
     needs: [Linux, Windows]
