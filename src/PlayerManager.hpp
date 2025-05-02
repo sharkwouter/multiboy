@@ -9,7 +9,9 @@
 #include "constants.hpp"
 #include "FontManager.hpp"
 #include "ScreenType.hpp"
+#include "PauseOption.hpp"
 #include "screen/ScreenBase.hpp"
+#include "screen/ScreenPlay.hpp"
 
 class PlayerManager {
 
@@ -25,6 +27,7 @@ private:
 
     ScreenBase * screen = nullptr;
     ScreenType current_screen_type = ScreenType::NONE;
+    ScreenPlay * play_screen = nullptr;
 
     void switchScreen(ScreenType next_screen_type);
     void clearScreen();
@@ -37,6 +40,9 @@ public:
     bool isConnected();
     bool isActive() {return this->active;}
     int getGamepadId();
+
+    void stopPlay();
+    void handlePauseOptionChoice(PauseOption);
 
     void handleInput(Input input);
     void update();
