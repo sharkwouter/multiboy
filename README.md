@@ -12,7 +12,6 @@ This emulator offers the following features:
 Features that still need to be implemented:
 - Link cable support.
 - Multi-threading. Right now all players run their emulators on the same thread, causing slowdowns.
-- Pause menu.
 
 Special thanks to the mgba community for the libmgba library.
 
