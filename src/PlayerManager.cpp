@@ -46,16 +46,15 @@ void PlayerManager::handleInput(Input input) {
             }
             break;
         case ScreenType::SELECT_NAME:
-            if(input.type == InputType::START) {
+            this->screen->handleInput(input);
+            if (((ScreenSelectName*) this->screen)->getNameIsChosen()) {
                 this->name = ((ScreenSelectName*) this->screen)->getSelectedName();
                 if (!this->name.empty()) {
                     SDL_Log("Name is %s!", this->name.c_str());
                     this->switchScreen(ScreenType::SELECT_ROM);
+                } else {
+                    this->switchScreen(ScreenType::SELECT_PROFILE);
                 }
-            } else if(input.type == InputType::SELECT) {
-                this->switchScreen(ScreenType::SELECT_PROFILE);
-            } else {
-                this->screen->handleInput(input);
             }
             break;
         case ScreenType::SELECT_ROM:

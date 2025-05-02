@@ -15,11 +15,13 @@ private:
     char * name;
     SDL_Texture* text = nullptr;
     int selected = 0;
+    int nameIsChosen = false;
 public:
     ScreenSelectName(FontManager * font_manager);
     ~ScreenSelectName();
 
     std::string getSelectedName();
+    bool getNameIsChosen();
 
     void handleInput(Input input);
     void update();

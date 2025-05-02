@@ -19,42 +19,51 @@ ScreenSelectName::~ScreenSelectName() {
 }
 
 void ScreenSelectName::handleInput(Input input) {
-    switch (input.type)
-    {
-    case InputType::B:
-    case InputType::LEFT:
-        this->selected -= 1;
-        if (this->selected < 0) {
-            this->selected = 0;
-        }
-        break;
-    case InputType::A:
-    case InputType::RIGHT:
-        this->selected += 1;
-        if (this->selected > (MAX_NAME_LENGTH - 1)) {
-            this->selected = MAX_NAME_LENGTH - 1;
-        }
-        break;
-    case InputType::UP:
-        if(this->name[this->selected] == 'A') {
+    if(this->nameIsChosen) {
+        return;
+    }
+
+    switch (input.type) {
+        case InputType::B:
             this->name[this->selected] = '_';
-        } else if(this->name[this->selected] == '_') {
-            this->name[this->selected] = 'Z';
-        } else {
-            this->name[this->selected] -= 1;
-        }
-        break;
-    case InputType::DOWN:
-        if(this->name[this->selected] == 'Z') {
-            this->name[this->selected] = '_';
-        } else if(this->name[this->selected] == '_') {
-            this->name[this->selected] = 'A';
-        } else {
-            this->name[this->selected] += 1;
-        }
-        break;
-    default:
-        break;
+            if (this->selected == 0) {
+                this->nameIsChosen = true;
+            } else {
+                this->selected -= 1;
+            }
+            break;
+        case InputType::A:
+            if (this->name[this->selected] == '_') {
+                if (this->selected > 0) {
+                    this->nameIsChosen = true;
+                }
+                break;
+            }
+            this->selected += 1;
+            if (this->selected > (MAX_NAME_LENGTH - 1)) {
+                this->selected = MAX_NAME_LENGTH - 1;
+            }
+            break;
+        case InputType::UP:
+            if(this->name[this->selected] == 'A') {
+                this->name[this->selected] = '_';
+            } else if(this->name[this->selected] == '_') {
+                this->name[this->selected] = 'Z';
+            } else {
+                this->name[this->selected] -= 1;
+            }
+            break;
+        case InputType::DOWN:
+            if(this->name[this->selected] == 'Z') {
+                this->name[this->selected] = '_';
+            } else if(this->name[this->selected] == '_') {
+                this->name[this->selected] = 'A';
+            } else {
+                this->name[this->selected] += 1;
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -101,4 +110,9 @@ std::string ScreenSelectName::getSelectedName() {
     }
 
     return result;
+}
+
+bool ScreenSelectName::getNameIsChosen()
+{
+  return this->nameIsChosen;
 }
