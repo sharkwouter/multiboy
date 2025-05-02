@@ -24,7 +24,6 @@ private:
     int active_players = 0;
 
     void createWindowAndRenderer();
-    void updatePlayerManagers();
 
     void drawSplashScreen();
     void drawPlayerScreens();

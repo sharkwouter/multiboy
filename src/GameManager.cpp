@@ -47,7 +47,6 @@ void GameManager::run() {
         SDL_RenderClear(this->renderer);
 
         this->input_manager->getInputs(&inputs);
-        this->updatePlayerManagers();
 
         for (Input input : inputs) {
             for(PlayerManager* player : this->player_managers) {
@@ -94,13 +93,6 @@ void GameManager::createWindowAndRenderer() {
         throw std::runtime_error(SDL_GetError());
     }
     SDL_ShowCursor(0);
-}
-
-void GameManager::updatePlayerManagers() {
-    if (!this->input_manager->has_controller_event_triggered()) {
-        return;
-    }
-
 }
 
 void GameManager::drawSplashScreen() {

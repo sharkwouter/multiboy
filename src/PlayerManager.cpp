@@ -165,6 +165,7 @@ void PlayerManager::disconnect() {
     }
     this->gamepad_id = NO_INPUT;
     this->active = false;
+    this->clearScreen();
 }
 
 void PlayerManager::switchScreen(ScreenType next_screen_type) {
@@ -216,4 +217,5 @@ void PlayerManager::clearScreen() {
         free(this->screen);
     }
     this->screen = nullptr;
+    this->current_screen_type = ScreenType::NONE;
 }
