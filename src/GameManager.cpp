@@ -43,7 +43,7 @@ void GameManager::run() {
 
     this->createWindowAndRenderer();
     while (!this->input_manager->has_quit_triggered() && !should_quit) {
-        SDL_SetRenderDrawColor(this->renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
         SDL_RenderClear(this->renderer);
 
         this->input_manager->getInputs(&inputs);
@@ -100,7 +100,7 @@ void GameManager::drawSplashScreen() {
     SDL_Rect splash_rect;
 
     if(this->splash_texture == nullptr) {
-        this->splash_texture = font_manager->getTexture(this->renderer, "Press start/enter", FontType::TITLE,  {0, 0, 0, 255});
+        this->splash_texture = font_manager->getTexture(this->renderer, "Press start/enter", FontType::TITLE,  {255, 255, 255, 255});
     }
 
     SDL_GetWindowSize(this->window, &window_rect.w, &window_rect.h);

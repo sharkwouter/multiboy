@@ -76,7 +76,7 @@ void ScreenSelectName::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
     SDL_Rect selection_rect;
     SDL_Rect text_rect;
     if (this->updated) {
-        this->text = this->font_manager->getTexture(renderer, this->name, FontType::TITLE, {0, 0, 0, 255});
+        this->text = this->font_manager->getTexture(renderer, this->name, FontType::TITLE, {255, 255, 255, 255});
     }
     SDL_QueryTexture(this->text, NULL, NULL, &text_rect.w, &text_rect.h);
     text_rect.x = dst_rect->x + (dst_rect->w / 2) - (text_rect.w / 2);

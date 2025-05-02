@@ -48,7 +48,7 @@ void ScreenSelectRom::draw(SDL_Renderer * renderer, SDL_Rect * dst_rect) {
             if (this->selected == i) {
                 this->texts[i] = this->font_manager->getTexture(renderer, this->roms[i], FontType::TITLE, {255, 0, 0, 255});
             } else {
-                this->texts[i] = this->font_manager->getTexture(renderer, this->roms[i], FontType::TITLE, {0, 0, 0, 255});
+                this->texts[i] = this->font_manager->getTexture(renderer, this->roms[i], FontType::TITLE, {255, 255, 255, 255});
             }
         }
         SDL_QueryTexture(this->texts[i], NULL, NULL, &text_rect.w, &text_rect.h);
