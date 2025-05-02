@@ -10,8 +10,9 @@
 ScreenSelectName::ScreenSelectName(FontManager * font_manager) {
     this->font_manager = font_manager;
 
-    this->name = (char *) malloc(sizeof(char) * MAX_NAME_LENGTH);
+    this->name = (char *) malloc(sizeof(char) * (MAX_NAME_LENGTH + 1));
     memset(this->name, '_', MAX_NAME_LENGTH);
+    this->name[MAX_NAME_LENGTH] = '\0';
 }
 
 ScreenSelectName::~ScreenSelectName() {
