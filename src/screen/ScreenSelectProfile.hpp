@@ -16,7 +16,7 @@ private:
 
     std::vector<std::string> profiles;
     std::vector<SDL_Texture*> texts;
-    SDL_Texture* text_new_profile;
+    SDL_Texture* text_new_profile = nullptr;
     int selected = 0;
 
     std::string new_profile_string = "Create new profile";

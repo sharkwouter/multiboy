@@ -96,8 +96,10 @@ void ScreenSelectProfile::resetTexts() {
             this->texts[i] = nullptr;
         }
     }
-    SDL_DestroyTexture(this->text_new_profile);
-    this->text_new_profile = nullptr;
+    if (this->text_new_profile) {
+        SDL_DestroyTexture(this->text_new_profile);
+        this->text_new_profile = nullptr;
+    }
 }
 
 void ScreenSelectProfile::getProfiles() {
