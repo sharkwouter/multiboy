@@ -107,11 +107,9 @@ void ScreenSelectProfile::getProfiles() {
     this->profiles.clear();
 
     std::filesystem::directory_iterator profile_iterator(getProfilePath());
-    SDL_Log("Looking for profiles");
     for (auto &profile : profile_iterator) {
         if (profile.is_directory()) {
             std::string name = profile.path().filename().string();
-            SDL_Log("Found profile: %s", name.c_str());
             this->profiles.push_back(name);
             this->texts.push_back(nullptr);
         }
@@ -120,7 +118,7 @@ void ScreenSelectProfile::getProfiles() {
 
 std::string ScreenSelectProfile::getSelectedProfile() {
     if (this->profiles.size() > 0 && selected != 0) {
-        return getRomPath() + "/" + this->profiles[this->selected - 1];
+        return this->profiles[this->selected - 1];
     } else {
         return "";
     }

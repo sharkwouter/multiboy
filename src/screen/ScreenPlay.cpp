@@ -30,7 +30,7 @@ ScreenPlay::ScreenPlay(std::string rom, std::string player_name) {
     mCoreConfigInit(&core->config, player_name.c_str());
     mCoreConfigLoad(&core->config);
 
-    std::string save_path = getProfilePath(player_name) + std::filesystem::path(rom).filename().string() + ".sav";
+    std::string save_path = getProfilePath(player_name) + std::filesystem::u8path(rom).filename().string() + ".sav";
     mCoreLoadSaveFile(core, save_path.c_str(), false);
 
     mCoreLoadConfig(core);
