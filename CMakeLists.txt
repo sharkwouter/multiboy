@@ -29,9 +29,6 @@ set(BUILD_STATIC_DEFAULT OFF)
 option(BUILD_STATIC "Build a static binary" ${BUILD_STATIC_DEFAULT})
 
 # Build libmgba from source
-set(BUILD_STATIC_LIBS ON)
-set(BUILD_SHARED_LIBS OFF)
-set(BUILD_OBJECT_LIBS OFF)
 set(LIBMGBA_ONLY ON)
 set(ENABLE_VFS ON)
 
