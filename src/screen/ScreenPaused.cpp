@@ -29,8 +29,8 @@ void ScreenPaused::handleInput(Input input) {
             break;
         case InputType::DOWN:
             selected += 1;
-            if (selected > (int) this->options.size()) {
-                selected = (int) this->options.size();
+            if (selected > (int) this->options.size() - 1) {
+                selected = (int) this->options.size() - 1;
             }
             this->resetTexts();
             break;
